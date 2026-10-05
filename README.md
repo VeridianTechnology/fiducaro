@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Copy `.env.example` to `.env.local` and set the Supabase project URL and publishable key. Apply `supabase/migrations/202610050001_console_sandbox.sql` to the Supabase project before opening the Console. The publishable key may be used by Vite; never put a secret or service-role key there. Open the URL printed by Vite, then select **Open Console**, or visit `/console/overview`. Run `npm test` and `npm run build` to verify the project.
+Copy `.env.example` to `.env.local` and set the Supabase project URL and publishable key. The three SQL files in `supabase/migrations/` are applied to project `egffkcjplbryzowofjte`; apply them in version order when setting up a new project. The publishable key may be used by Vite; never put a secret or service-role key there. Configure the Supabase Auth redirect URL for the Vite origin and invite a user before opening the Console. Open the URL printed by Vite, then select **Open Console**, or visit `/console/overview`. Run `npm test` and `npm run build` to verify the project.
 
 ## Public site
 
