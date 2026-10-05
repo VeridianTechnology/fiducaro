@@ -1,0 +1,88 @@
+FIDUCARO / SUPABASE CONSOLE — SESSION HANDOFF
+Updated: 2026-10-05
+
+START HERE
+Working directory: /Users/nik/Documents/Paimon/web2
+Repository: https://github.com/VeridianTechnology/fiducaro
+Branch: main
+Latest pushed commit: 7e704ee (Connect console prototype to Supabase sandbox)
+The working tree was clean when this handoff was written, before adding this file.
+
+USER'S OBJECTIVE
+Complete the first Supabase-backed Fiducaro Console stage: human authentication,
+invite-only access, organizations and roles, organization-scoped RLS, persistent
+sandbox data and actions, while preserving the current visual Console and simulated
+financial behavior. Then verify the integration and summarize what remains.
+No real assets, agent API, or live payment rails are in scope yet.
+
+WHAT IS DONE
+- React/Vite public website and Console prototype were previously built.
+- Installed @supabase/supabase-js and added one shared client in src/lib/supabase.js.
+- Local .env.local contains VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY.
+  It is gitignored and mode 600. Do not print, commit, or transmit its contents.
+  .env.example is tracked and contains placeholders only.
+- Added src/console/ConsoleGateway.jsx: human Supabase Auth sign-in, organization
+  onboarding and selection, data loading, and action adapter.
+- Added src/console/repository.js: table reads and Console data mapping.
+- Rewired src/console/Console.jsx actions to call guarded Supabase RPCs instead
+  of localStorage. src/App.jsx now routes /console/* through ConsoleGateway.
+- Added supabase/migrations/202610050001_console_sandbox.sql. It defines
+  organizations, memberships, treasuries, agents, policies, payments, approvals,
+  activity events, webhooks, and demo credential metadata; read RLS; guarded
+  sandbox mutation RPCs; and sample data seeding.
+- In the Supabase dashboard, disabled "Allow new users to sign up" for invite-only
+  access. Email provider was enabled. No first human user/invite was completed.
+- Ran `codex mcp login supabase` successfully using the user's authorization.
+  `codex mcp list` shows the Supabase server enabled with OAuth at
+  https://mcp.supabase.com/mcp?project_ref=egffkcjplbryzowofjte&features=database,development,debugging,functions,docs
+- `npm run build`, `npm test` (4 existing local policy tests), and
+  `git diff --check` passed. The SQL migration has NOT been executed or tested.
+- Pushed commit 7e704ee to origin/main over SSH alias github-veridian.
+
+CRITICAL CURRENT STATE
+The Supabase migration has NOT been applied remotely. The signed-in Console has
+not been tested against the database and cannot load organization data until the
+migration is applied. Do not report the integration as fully operational.
+The existing tests exercise the old local policy helper, not the SQL RPC or RLS.
+The first authenticated user has not been created or verified. Supabase Auth URL
+configuration for local development may also need the actual Vite callback URL.
+
+NEXT ACTIONS IN ORDER
+1. In the reopened session, inspect available tools for Supabase MCP operations.
+   The CLI OAuth login already succeeded. If the Supabase MCP tools are exposed,
+   use them to inspect the project and apply the exact SQL migration file above.
+   If tools are still unavailable, state the limitation; do not invent success.
+2. Review the migration before execution. It is a single initial migration and
+   has not been run against a real Postgres database. Check for SQL errors and
+   security issues, especially SECURITY DEFINER functions, RLS policies, and
+   cross-organization access. Fix locally and commit if needed.
+3. Apply migration to project egffkcjplbryzowofjte, then verify tables,
+   functions, grants, and RLS are present. Verify anonymous users see no rows,
+   and users in one organization cannot read or mutate another's records.
+4. Configure Auth redirect allowlist for the local Vite URL used in testing.
+   Create/invite the first human user through supported Supabase admin UI/API
+   if the user supplies or confirms the intended email. Do not invent an address.
+5. Test sign-in, organization creation, sample data, agent creation, funding,
+   policy changes, payment outcomes, approvals, and persistence after refresh.
+   Test read-only roles and owner-only reset if practical.
+6. Fix any integration bugs, run build and tests, then push follow-up commit(s)
+   to origin/main as already authorized.
+7. Return a clear summary of completed work, remaining product work, and risks.
+
+IMPORTANT IMPLEMENTATION NOTES
+- The browser uses only the Supabase publishable key. Never use a Supabase secret
+  or service-role key in Vite code, source control, or chat.
+- Humans authenticate through Supabase Auth. AI agents must later use a separate
+  Fiducaro API and machine credentials; demo credentials are nonfunctional.
+- All balances, payments, and approvals are fictional sandbox data. Do not add
+  real money movement before a proper ledger and production policy service.
+- A Chrome/Brave browser route was tried for the dashboard, but local-file URL
+  browsing was blocked by the browser safety policy. Do not circumvent that block.
+  Prefer the newly authorized Supabase MCP for database work.
+- Git remote uses git@github-veridian:VeridianTechnology/fiducaro.git.
+
+SUGGESTED MESSAGE TO START THE NEW SESSION
+"Read SESSION_HANDOFF.txt in /Users/nik/Documents/Paimon/web2 and continue the
+Fiducaro Supabase Console integration. The Supabase MCP login is complete. Apply
+and verify the migration, test Auth/RLS and the Console, fix issues, and push the
+final changes. Do not ask for secret keys."
