@@ -5,8 +5,8 @@ START HERE
 Working directory: /Users/nik/Documents/Paimon/web2
 Repository: https://github.com/VeridianTechnology/fiducaro
 Branch: main
-Latest pushed commit: 7e704ee (Connect console prototype to Supabase sandbox)
-The working tree was clean when this handoff was written, before adding this file.
+Implementation commit: 7e704ee (Connect console prototype to Supabase sandbox)
+Handoff file is committed on main. Check `git status` when reopening.
 
 USER'S OBJECTIVE
 Complete the first Supabase-backed Fiducaro Console stage: human authentication,
