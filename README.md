@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Open the URL printed by Vite, then select **Open Console**, or visit `/console/overview`. Run `npm test` for sandbox policy tests and `npm run build` for a production build.
+Copy `.env.example` to `.env.local` and set the Supabase project URL and publishable key. Apply `supabase/migrations/202610050001_console_sandbox.sql` to the Supabase project before opening the Console. The publishable key may be used by Vite; never put a secret or service-role key there. Open the URL printed by Vite, then select **Open Console**, or visit `/console/overview`. Run `npm test` and `npm run build` to verify the project.
 
 ## Public site
 
@@ -19,12 +19,12 @@ Home, Product, Developers, Security, Use Cases, and Company. The supplied logo a
 
 The Console has Organization Overview, Agents, Accounts, Policies, Payments, Treasury, Approvals, Privacy, Activity, Developers, Security, and Organization views. Agent detail includes Overview, Balance, Permissions, Transactions, API, and Logs tabs.
 
-Demo actions include creating and suspending agents, allocating test balances, editing policy, simulating payments, resolving approvals, changing privacy modes, generating nonfunctional credential previews, configuring nondelivering webhooks, and resetting sample data. Actions update the overview and activity stream. State is stored only in the current browser's `localStorage` under `fiducaro-console-sandbox-v1`.
+Human operators sign in through Supabase Auth. After sign-in, the first user creates a sandbox organization and becomes its owner. Organization records and simulated actions persist in Postgres. Row Level Security limits reads to members, and guarded database functions perform sandbox mutations. Demo actions include creating and suspending agents, allocating test balances, editing policy, simulating payments, resolving approvals, changing privacy modes, generating nonfunctional credential previews, configuring nondelivering webhooks, and resetting sample data.
 
-**This is not a financial system.** There is no sign-in, server database, actual API, real credential, webhook delivery, wallet, settlement, or money movement. Sample organizations, balances, vendors, payments, policy outcomes, and metrics are fictional. The payment policy code is a local demonstration and must not be used as production financial authorization.
+**This is not a financial system.** There is no agent API, real credential, webhook delivery, wallet, settlement, or money movement. Sample organizations, balances, vendors, payments, policy outcomes, and metrics are fictional. The SQL policy simulation is for a sandbox only and must not be used as production financial authorization.
 
 ## Integration boundaries
 
-Before live use, add human authentication and organization membership, database tables with organization-scoped access rules, server-side policy evaluation, immutable audit records, credential hashing and rotation, idempotency handling, reliable approval and payment state transitions, a ledger, webhook delivery, and independent security review. Never put a Supabase secret or service-role key in Vite client code.
+Before live use, add immutable audit records, real machine credential issuance and rotation, idempotency handling, reliable approval and payment state transitions, a double-entry ledger, webhook delivery, MFA, and independent security review. AI agents should use a separate Fiducaro API and never authenticate as human Supabase users.
 
 Request Access and Contact on the public site currently use `hello@fiducaro.com` as a placeholder mail destination. Replace it in `src/App.jsx` with an approved contact channel before publishing.

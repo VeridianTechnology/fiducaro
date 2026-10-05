@@ -3,3 +3,26 @@
 @media(max-width:1000px){.con-sidebar{width:215px}.con-shell{margin-left:215px}.con-main{padding:26px 22px 60px}.con-topbar{padding:0 22px}.con-two-col{grid-template-columns:1fr}.con-overview-orbit{display:none}.con-agent-summary{grid-template-columns:repeat(2,1fr)}.con-agent-summary>div:nth-child(2){border-right:0}.con-agent-summary>div:nth-child(-n+2){border-bottom:1px solid #29505b}}
 @media(max-width:760px){.con-sidebar{transform:translateX(-100%);transition:transform .22s;width:250px;box-shadow:15px 0 50px #0006}.con-sidebar.open{transform:translateX(0)}.con-sidebar-close{display:block;border:0;background:none;color:#abc4c8}.con-shell{margin-left:0}.con-mobile-menu{display:grid;place-items:center;background:none;border:0;color:#b9d2d4;padding:0}.con-topbar{gap:13px;height:60px}.con-breadcrumb{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.con-top-actions{gap:10px}.con-top-sandbox{font-size:0}.con-top-sandbox svg{width:15px}.con-main{padding:25px 16px 60px}.con-overview-lead{padding:25px}.con-page-intro{align-items:flex-start}.con-page-actions{margin-top:2px}.con-policy-grid,.con-privacy-grid,.con-account-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:580px){.con-page-intro{display:block}.con-page-actions{margin-top:15px}.con-demo-banner{font-size:9px}.con-stats,.con-stats.three{grid-template-columns:repeat(2,1fr);gap:8px}.con-stat{min-height:120px;padding:13px}.con-stat strong{font-size:17px}.con-stat-label{font-size:7px}.con-overview-lead{min-height:0}.con-overview-lead h2{font-size:27px}.con-overview-links{flex-wrap:wrap}.con-compact-list>button{gap:7px}.con-compact-list strong{font-size:9px}.con-compact-list .con-pill{display:none}.con-filterbar{align-items:stretch;flex-direction:column}.con-search{width:100%}.con-segments{align-self:flex-start}.con-agent-bar{align-items:flex-start;flex-direction:column}.con-agent-bar>div{flex-wrap:wrap}.con-agent-summary{grid-template-columns:1fr 1fr}.con-agent-summary>div{padding:14px}.con-agent-summary strong{font-size:15px}.con-agent-identity{grid-column:span 2;border-bottom:1px solid #29505b!important;border-right:0!important}.con-agent-summary>div:nth-child(2){border-right:1px solid #29505b}.con-agent-summary>div:nth-child(3){border-right:0}.con-agent-summary>div:last-child{grid-column:span 2;border-top:1px solid #29505b}.con-policy-grid,.con-privacy-grid,.con-account-grid,.con-approval-grid,.con-scenarios{grid-template-columns:1fr}.con-payment-hero,.con-dev-hero{padding:22px;align-items:flex-start;flex-direction:column}.con-api-illustration{width:100%}.con-form-grid{grid-template-columns:1fr;gap:0}.con-form-grid .con-field:last-child:nth-child(odd){grid-column:auto}.con-modal{padding:20px}.con-modal-foot{align-items:flex-start;flex-direction:column}.con-event{grid-template-columns:7px 55px minmax(0,1fr);gap:7px}.con-event em{display:none}.con-approval-actions>button:last-child{margin-left:0}}
+
+/* Auth and organization controls */
+.con-auth-page,.con-loading{min-height:100vh;background:radial-gradient(circle at 75% 15%,#073d47 0,transparent 35%),#031019;color:#f4f7f8;display:grid;place-items:center;padding:24px}
+.con-loading{font-size:16px;color:#9aa7ae}
+.con-auth-card{width:min(100%,480px);border:1px solid #25505b;background:rgba(7,30,43,.86);box-shadow:0 24px 90px #0008;border-radius:16px;padding:38px}
+.con-auth-brand{display:inline-flex;align-items:center;gap:12px;color:#f4f7f8;text-decoration:none;font-weight:800;letter-spacing:.16em;font-size:14px;margin-bottom:38px}
+.con-auth-icon{width:50px;height:50px;border:1px solid #217d85;border-radius:12px;color:#42f2e4;display:grid;place-items:center;margin-bottom:24px;background:#0a333e}
+.con-auth-card h1{font-size:32px;line-height:1.14;letter-spacing:-.035em;margin:12px 0}
+.con-auth-card p{color:#9aa7ae;line-height:1.6;margin:0 0 26px}
+.con-auth-tabs{display:flex;gap:8px;border-bottom:1px solid #25404a;margin-bottom:22px}
+.con-auth-tabs button{border:0;background:transparent;color:#9aa7ae;padding:12px 14px;cursor:pointer}
+.con-auth-tabs button.selected{color:#42f2e4;border-bottom:2px solid #42f2e4}
+.con-auth-card form{display:grid;gap:18px}
+.con-auth-card label{display:grid;gap:8px;color:#c8d4d8;font-size:13px}
+.con-auth-card input{width:100%;background:#071923;border:1px solid #30525c;border-radius:8px;color:#f4f7f8;padding:13px 14px;font:inherit}
+.con-auth-card form>button,.con-auth-retry{border:0;border-radius:8px;background:#22dad6;color:#02141a;font:inherit;font-weight:700;padding:13px 16px;display:flex;justify-content:center;align-items:center;gap:10px;cursor:pointer}
+.con-auth-card form>button:disabled{opacity:.6;cursor:wait}
+.con-auth-message{margin-top:18px;border:1px solid #33646b;background:#0d3039;border-radius:8px;padding:12px;color:#d6f4f3;font-size:13px}
+.con-auth-message.error{border-color:#8a4848;color:#ffd3d3}
+.con-auth-foot{border-top:1px solid #25404a;margin-top:28px;padding-top:18px;display:flex;gap:8px;align-items:center;color:#80939a;font-size:12px}
+.con-org select{min-width:0;flex:1;border:0;background:transparent;color:#f4f7f8;font:inherit;font-weight:700;appearance:none;cursor:pointer}
+.con-org select option{background:#071923;color:#fff}
+.con-signout{border:1px solid #2d4b55;background:transparent;color:#bbcccf;border-radius:7px;padding:7px 10px;cursor:pointer;font-size:12px}
