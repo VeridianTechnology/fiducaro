@@ -33,15 +33,20 @@ WHAT IS DONE
 - In the Supabase dashboard, disabled "Allow new users to sign up" for invite-only
   access. Email provider was enabled. No first human user/invite was completed.
 - Supabase MCP is authorized and working for project egffkcjplbryzowofjte.
-- Applied the initial migration and two follow-up migrations through MCP.
+- Applied the initial migration and three follow-up migrations through MCP.
   Local filenames match the remote migration versions (20261005102614,
-  20261005102832, and 20261005103009).
+  20261005102832, 20261005103009, and 20261005154126).
   All ten public tables have RLS enabled. The follow-ups restrict private
   membership helper grants, allow developer demo credential/webhook actions,
-  and recheck current policy before a held payment is approved.
+  recheck current policy before a held payment is approved, and revoke direct
+  authenticated execution of private.member_role.
 - Rollback-only database checks covered organization reads, cross-organization
   mutation denial, direct table write denial, developer and auditor roles,
   and approval policy enforcement. No test users or organizations remain.
+- A second rollback-only test covered all ten tables, all sandbox action names
+  against another organization, operator/developer/auditor permissions, and the
+  full database sandbox workflow including payments, approvals, credentials,
+  activity, and reset. These do not replace real browser sign-in tests.
 - `npm run build`, `npm test` (4 existing local policy tests), and
   `git diff --check` passed after the remote migrations.
 - Pushed commit 7e704ee to origin/main over SSH alias github-veridian.
@@ -54,8 +59,9 @@ The existing tests exercise the old local policy helper, not the SQL RPC or RLS.
 The first authenticated user has not been invited or verified. Use
 bucc@fiducaro.com, supplied by the user, for the first invite. Supabase Auth URL
 configuration for local development may also need the actual Vite callback URL.
-The Supabase security advisor reports two expected warnings for the guarded
-public SECURITY DEFINER RPCs; review before production use.
+The Supabase security advisor reports two warnings for the guarded public
+SECURITY DEFINER RPCs. The residual risk is that a bug in their authorization
+or action validation would run with the function owner's privileges.
 
 NEXT ACTIONS IN ORDER
 1. Configure Auth redirect allowlist for the local Vite URL used in testing.
@@ -82,6 +88,6 @@ IMPORTANT IMPLEMENTATION NOTES
 
 SUGGESTED MESSAGE TO START THE NEW SESSION
 "Read SESSION_HANDOFF.txt in /Users/nik/Documents/Paimon/web2 and continue the
-Fiducaro Supabase Console integration. The three migrations are applied.
+Fiducaro Supabase Console integration. The four migrations are applied.
 Configure Auth redirects, invite bucc@fiducaro.com, and test the signed-in
 Console end to end. Do not ask for secret keys."
