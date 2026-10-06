@@ -23,6 +23,15 @@
 .con-auth-message{margin-top:18px;border:1px solid #33646b;background:#0d3039;border-radius:8px;padding:12px;color:#d6f4f3;font-size:13px}
 .con-auth-message.error{border-color:#8a4848;color:#ffd3d3}
 .con-auth-foot{border-top:1px solid #25404a;margin-top:28px;padding-top:18px;display:flex;gap:8px;align-items:center;color:#80939a;font-size:12px}
+.con-auth-methods{display:flex;gap:8px;margin:-8px 0 20px}
+.con-auth-methods button{border:1px solid #30525c;background:#091f2a;color:#9aaeb3;border-radius:7px;padding:7px 12px;font:inherit;font-size:12px;cursor:pointer}
+.con-auth-methods button.selected{border-color:#32b7b5;color:#8bf0e8;background:#10333b}
+.con-auth-card form>button.con-auth-inline,.con-auth-inline{justify-self:end;border:0;background:none;color:#73dcd6;padding:0;font:inherit;font-size:12px;cursor:pointer;text-decoration:underline}
+.con-auth-back{display:block;margin-top:18px}
+.con-auth-actions{display:flex;flex-wrap:wrap;gap:10px}
+.con-auth-secondary{border:1px solid #39727a;border-radius:8px;background:#12343c;color:#c4f1ec;padding:11px 14px;font:inherit;font-weight:700;cursor:pointer}
+.con-auth-secondary:disabled{opacity:.6;cursor:wait}
+.con-auth-email{display:block;color:#e7f8f6;overflow-wrap:anywhere}
 .con-org select{min-width:0;flex:1;border:0;background:transparent;color:#f4f7f8;font:inherit;font-weight:700;appearance:none;cursor:pointer}
 .con-org select option{background:#071923;color:#fff}
 .con-signout{border:1px solid #2d4b55;background:transparent;color:#bbcccf;border-radius:7px;padding:7px 10px;cursor:pointer;font-size:12px}

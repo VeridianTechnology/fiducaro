@@ -9,7 +9,11 @@ npm install
 npm run dev
 ```
 
-Copy `.env.example` to `.env.local` and set the Supabase project URL and publishable key. The four SQL files in `supabase/migrations/` are applied to project `egffkcjplbryzowofjte`; apply them in version order when setting up a new project. The publishable key may be used by Vite; never put a secret or service-role key there. Configure the Supabase Auth redirect URL for the Vite origin and invite a user before opening the Console. Open the URL printed by Vite, then select **Open Console**, or visit `/console/overview`. Run `npm test` and `npm run build` to verify the project.
+Copy `.env.example` to `.env.local` and set the Supabase project URL and publishable key. The first four SQL migrations are applied to project `egffkcjplbryzowofjte`; the newest anonymous/confirmation guard migration is pending. Apply migrations in version order when setting up a new project. The publishable key may be used by Vite; never put a secret or service-role key there. Open the URL printed by Vite, then select **Open Console**, or visit `/console/overview`. Run `npm test` and `npm run build` to verify the project.
+
+## Auth configuration
+
+Enable new user email/password signup in the hosted Supabase Auth settings and keep email confirmation required. Disable anonymous, Web3, and Solana sign-ins for this email/password milestone. Add the app origin's `/console/overview` and `/console/reset-password` URLs to Auth's allowed redirect URLs. Add both local development and production origins when applicable. Registration and recovery links use the current browser origin; the code does not hardcode a deployment hostname. New confirmed users create a sandbox organization through `create_demo_organization`, which makes them its owner. The newest SQL file blocks anonymous or unconfirmed accounts from Console membership and onboarding; apply it before opening public registration.
 
 ## Public site
 

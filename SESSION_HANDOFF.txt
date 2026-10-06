@@ -9,10 +9,9 @@ Initial implementation commit: 7e704ee (Connect console prototype to Supabase sa
 Handoff file is committed on main. Check `git status` when reopening.
 
 USER'S OBJECTIVE
-Complete the first Supabase-backed Fiducaro Console stage: human authentication,
-invite-only access, organizations and roles, organization-scoped RLS, persistent
-sandbox data and actions, while preserving the current visual Console and simulated
-financial behavior. Then verify the integration and summarize what remains.
+Complete public email/password registration, email confirmation, sign-in,
+password recovery, first-user organization onboarding, and persistent Console
+sessions while preserving organization-scoped RLS and simulated finances.
 No real assets, agent API, or live payment rails are in scope yet.
 
 WHAT IS DONE
@@ -30,8 +29,9 @@ WHAT IS DONE
   organizations, memberships, treasuries, agents, policies, payments, approvals,
   activity events, webhooks, and demo credential metadata; read RLS; guarded
   sandbox mutation RPCs; and sample data seeding.
-- In the Supabase dashboard, disabled "Allow new users to sign up" for invite-only
-  access. Email provider was enabled. No first human user/invite was completed.
+- Earlier, "Allow new users to sign up" was disabled for invite-only access.
+  The current requirement is public self-registration; it must be re-enabled
+  while email confirmation stays required. MCP has no Auth settings tool.
 - Supabase MCP is authorized and working for project egffkcjplbryzowofjte.
 - Applied the initial migration and three follow-up migrations through MCP.
   Local filenames match the remote migration versions (20261005102614,
@@ -47,32 +47,46 @@ WHAT IS DONE
   against another organization, operator/developer/auditor permissions, and the
   full database sandbox workflow including payments, approvals, credentials,
   activity, and reset. These do not replace real browser sign-in tests.
-- `npm run build`, `npm test` (4 existing local policy tests), and
-  `git diff --check` passed after the remote migrations.
-- Pushed commit 7e704ee to origin/main over SSH alias github-veridian.
+- Added Create Account, confirmation/resend, Forgot Password, and set-new-password
+  screens using the public Supabase client. Confirmation and recovery redirects
+  use the current app origin. Onboarding still uses the secure organization RPC.
+- Added an unapplied follow-up migration,
+  supabase/migrations/20261005230049_block_anonymous_console_users.sql,
+  which requires a non-anonymous session and confirmed email for membership
+  checks and organization creation. Supabase MCP rejected apply_migration:
+  "MCP tool call requires approval, but approval policy is never."
+- `npm run build`, `npm test` (7 tests), and `git diff --check` passed locally.
+- Previous database/security work was pushed through commit 0b081a2.
+- The current workspace permits source edits but denied writing `.git/index.lock`.
+  The registration changes remain uncommitted; no new Git hash or push exists.
 
 CRITICAL CURRENT STATE
-The migrations are applied remotely, but the signed-in Console has not been
-tested end to end because the project has no Auth users yet. Do not report the
-integration as fully operational.
-The existing tests exercise the old local policy helper, not the SQL RPC or RLS.
-The first authenticated user has not been invited or verified. Use
-bucc@fiducaro.com, supplied by the user, for the first invite. Supabase Auth URL
-configuration for local development may also need the actual Vite callback URL.
+Four earlier migrations are applied remotely, but the signed-in Console has not been
+tested end to end because the project has no Auth users yet. The current
+workspace cannot reach the public Auth settings endpoint, and Supabase MCP
+exposes no Auth configuration or invite operation. Do not report registration,
+email confirmation, password reset, or session persistence as verified.
+The user showed a settings screenshot with signup and confirm-email toggles on,
+but anonymous sign-ins were also on and Save changes was still visible. The
+user later said Web3 and Solana were enabled. These are outside the requested
+email/password flow; ask them to disable anonymous, Web3, and Solana, then save.
+The new guard migration must be applied before public registration is opened.
+The old policy tests exercise a local helper, not the SQL RPC or RLS. New tests
+cover auth form validation and redirect URL construction.
 The Supabase security advisor reports two warnings for the guarded public
 SECURITY DEFINER RPCs. The residual risk is that a bug in their authorization
 or action validation would run with the function owner's privileges.
 
 NEXT ACTIONS IN ORDER
-1. Configure Auth redirect allowlist for the local Vite URL used in testing.
-   Invite bucc@fiducaro.com through a supported Supabase Auth admin UI/API.
-   The available Supabase MCP connection has no Auth invite/configuration tools.
-2. Test sign-in, organization creation, sample data, agent creation, funding,
-   policy changes, payment outcomes, approvals, and persistence after refresh.
-   Test read-only roles and owner-only reset if practical.
-3. Fix any integration bugs, run build and tests, then push follow-up commit(s)
-   to origin/main as already authorized.
-4. Return a clear summary of completed work, remaining product work, and risks.
+1. Enable public email/password signup in hosted Supabase Auth, keep email
+   confirmation required, and disable anonymous, Web3, and Solana sign-ins.
+   Save changes. Allow the actual app origin's
+   /console/overview and /console/reset-password redirect URLs.
+2. Apply the pending guard migration through an approved Supabase path.
+3. With a real inbox, create a new user, confirm email, sign in, create an
+   organization, refresh, sign out, sign back in, and verify persisted data.
+   Repeat with a second user for app-level isolation if practical.
+4. Fix any observed bugs, run build and tests, and report the verified milestone.
 
 IMPORTANT IMPLEMENTATION NOTES
 - The browser uses only the Supabase publishable key. Never use a Supabase secret
@@ -87,7 +101,8 @@ IMPORTANT IMPLEMENTATION NOTES
 - Git remote uses git@github-veridian:VeridianTechnology/fiducaro.git.
 
 SUGGESTED MESSAGE TO START THE NEW SESSION
-"Read SESSION_HANDOFF.txt in /Users/nik/Documents/Paimon/web2 and continue the
-Fiducaro Supabase Console integration. The four migrations are applied.
-Configure Auth redirects, invite bucc@fiducaro.com, and test the signed-in
-Console end to end. Do not ask for secret keys."
+"Read SESSION_HANDOFF.txt in /Users/nik/Documents/Paimon/web2 and finish the
+Fiducaro public registration milestone. Four migrations are applied and one
+anonymous/confirmed-email guard migration is pending. Enable email signup with
+confirmation, disable unrelated providers, allow both Console redirect URLs,
+then test a real signup and persistent session. Do not ask for secret keys."
